@@ -7,6 +7,6 @@ The pets are playing on the playground (Petopia) but invaders have arrived! You 
 ## Technology:
 * Python 3.6
 * Pygame library 
-  pygame (the library) is a Free and Open Source python programming language library for making multimedia applications like games built     on top of the excellent SDL library
+  - pygame (the library) is a Free and Open Source python programming language library for making multimedia applications like games built     on top of the excellent SDL library
 
 
