@@ -34,10 +34,7 @@ class Pet(pg.sprite.Sprite):
     self.image = pg.image.load('images/Sprite_Border_Collie.png')
     # self.image.fill(color)
 
-    # Fetch the rectangle object that has the dimensions of the image
-    # image.
-    # Update the position of this object by setting the values
-    # of rect.x and rect.y
+    # Fetch the rectangle object that has the dimensions of the image, update the position of this object by setting the values of rect.x and rect.y
     self.rect = self.image.get_rect()
 
 #initiate class flea
@@ -56,10 +53,7 @@ class Flea(pg.sprite.Sprite):
     self.image = pg.image.load('images/Sprite_Flea.png')
     # self.image.fill(color)
 
-    # Fetch the rectangle object that has the dimensions of the image
-    # image.
-    # Update the position of this object by setting the values
-    # of rect.x and rect.y
+    # Fetch the rectangle object that has the dimensions of the image, update the position of this object by setting the values of rect.x and rect.y
     self.rect = self.image.get_rect()
 
 #initiate class player
@@ -67,6 +61,7 @@ class Player(pg.sprite.Sprite):
 
 # This class represents the pet and derives from the "Sprite" class in Pygame.
 
+  #def __init__(self, image)
   def __init__(self):
     # Constructor. Pass in the color of the block,
     # and its x and y position. 
@@ -78,10 +73,7 @@ class Player(pg.sprite.Sprite):
     self.image = pg.image.load('images/Sprite_fly_swatter.png')
     # self.image.fill(color)
 
-    # Fetch the rectangle object that has the dimensions of the image
-    # image.
-    # Update the position of this object by setting the values
-    # of rect.x and rect.y
+    # Fetch the rectangle object that has the dimensions of the image, update the position of this object by setting the values of rect.x and rect.y
     self.rect = self.image.get_rect()
 
 # image = py.image.load('images/Cartoon_Border_Collie.png')
@@ -94,9 +86,11 @@ screenHeight = 948
 screen = pg.display.set_mode((screenWidth, screenHeight))
 pg.display.set_caption("Petopia: Pet Rescue!")
 
-# This is a list of 'sprites.' Each sprite in the program is
-# added to this list. The list is managed by a class called 'Group.'
+# This is a list of pet sprites and each pet is added to this list. The list is managed by a class called 'Group.'
 pet_list = pg.sprite.Group()
+
+# This is a list of flea sprites and each flea is added to this list. The list is managed by a class called 'Group.'
+flea_list = pg.sprite.Group()
 
 #This is a list of all sprites
 all_sprites_list = pg.sprite.Group()
@@ -124,7 +118,7 @@ for i in range(10):
   flea.rect.y = random.randrange(screenHeight)
 
   # Add the flea to the list of objects
-  pet_list.add(flea)
+  flea_list.add(flea)
   all_sprites_list.add(flea)  
 
 # create catcher for player
@@ -165,10 +159,10 @@ while not done:
   player.rect.y = pos[1]
 
   # See if the player block has collided with anything.
-  pets_hit_list = pg.sprite.spritecollide(player, pet_list, True)
+  flea_hit_list = pg.sprite.spritecollide(player, flea_list, True)
 
   # Check the list of collisions.
-  for pet in pets_hit_list:
+  for pet in flea_hit_list:
       score += 1
       print(score)
       # return score
