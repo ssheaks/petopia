@@ -10,9 +10,9 @@ The pets are playing on the playground (Petopia) but invaders have arrived! You 
   - pygame (the library) is a Free and Open Source python programming language library for making multimedia applications like games built     on top of the excellent SDL library
   
 ## ToDo - an MVP checklist
-* [ ] Images for pets, invaders and background
+* [x] Images for pets, invaders and background
 * [ ] Implement moveable characters
-* [ ] Implement background
+* [x] Implement background
 * [ ] Create timed game
 * [ ] Increase speed as time progresses
 * [ ] Tell player when game ends and their stats for the game
