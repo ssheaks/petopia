@@ -31,7 +31,7 @@ class Pet(pg.sprite.Sprite):
     super().__init__()
 
     # Create an image loaded from the disk.
-    self.image = pg.image.load('images/Cartoon_Border_Collie.png')
+    self.image = pg.image.load('images/Sprite_Border_Collie.png')
     # self.image.fill(color)
 
     # Fetch the rectangle object that has the dimensions of the image
@@ -41,6 +41,48 @@ class Pet(pg.sprite.Sprite):
     self.rect = self.image.get_rect()
 
 #initiate class flea
+class Flea(pg.sprite.Sprite):
+
+# This class represents the pet and derives from the "Sprite" class in Pygame.
+
+  def __init__(self):
+    # Constructor. Pass in the color of the block,
+    # and its x and y position. 
+
+    # Call the parent class (Sprite) constructor
+    super().__init__()
+
+    # Create an image loaded from the disk.
+    self.image = pg.image.load('images/Sprite_Flea.png')
+    # self.image.fill(color)
+
+    # Fetch the rectangle object that has the dimensions of the image
+    # image.
+    # Update the position of this object by setting the values
+    # of rect.x and rect.y
+    self.rect = self.image.get_rect()
+
+#initiate class player
+class Player(pg.sprite.Sprite):
+
+# This class represents the pet and derives from the "Sprite" class in Pygame.
+
+  def __init__(self):
+    # Constructor. Pass in the color of the block,
+    # and its x and y position. 
+
+    # Call the parent class (Sprite) constructor
+    super().__init__()
+
+    # Create an image loaded from the disk.
+    self.image = pg.image.load('images/Sprite_fly_swatter.png')
+    # self.image.fill(color)
+
+    # Fetch the rectangle object that has the dimensions of the image
+    # image.
+    # Update the position of this object by setting the values
+    # of rect.x and rect.y
+    self.rect = self.image.get_rect()
 
 # image = py.image.load('images/Cartoon_Border_Collie.png')
 
@@ -52,7 +94,7 @@ screenHeight = 948
 screen = pg.display.set_mode((screenWidth, screenHeight))
 pg.display.set_caption("Petopia: Pet Rescue!")
 
-# This is a list of 'sprites.' Each block in the program is
+# This is a list of 'sprites.' Each sprite in the program is
 # added to this list. The list is managed by a class called 'Group.'
 pet_list = pg.sprite.Group()
 
@@ -68,12 +110,25 @@ for i in range(10):
   pet.rect.x = random.randrange(screenWidth)
   pet.rect.y = random.randrange(screenHeight)
 
-  # Add the block to the list of objects
+  # Add the pet to the list of objects
   pet_list.add(pet)
   all_sprites_list.add(pet)  
 
+# for loop for fleas
+for i in range(10):
+  #this represents a pet
+  flea = Flea()
+
+# Set a random location for the block
+  flea.rect.x = random.randrange(screenWidth)
+  flea.rect.y = random.randrange(screenHeight)
+
+  # Add the flea to the list of objects
+  pet_list.add(flea)
+  all_sprites_list.add(flea)  
+
 # create catcher for player
-player = Pet()
+player = Player()
 all_sprites_list.add(player)
 
 ##loop until user clicks close (will update to timer)
@@ -101,7 +156,7 @@ while not done:
   #set background image
   screen.blit(background_image, [0, 0])
   
-  # Get the current mouse position. This returns the position as a list of two numbers.
+  # Get the current mouse position. Returns position as a list of two numbers.
   pos = pg.mouse.get_pos()
 
   # Fetch the x and y out of the list like we fetch letters out of a string.
