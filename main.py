@@ -7,9 +7,12 @@ _image_library = {}
 def get_image(path):
         global _image_library
         image = _image_library.get(path)
+        # image = pg.Surface((29, 30))
         if image == None:
                 canonicalized_path = path.replace('/', os.sep).replace('\\', os.sep)
                 image = pg.image.load(canonicalized_path)
+                #this rescales images
+                image = pg.transform.scale(image, (97, 100))
                 _image_library[path] = image
         return image
 
