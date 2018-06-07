@@ -57,7 +57,7 @@ class Pet(pg.sprite.Sprite):
       self.rect.x = self.radius * math.sin(self.angle) + self.center_x
       self.rect.y = self.radius * math.cos(self.angle) + self.center_y
 
-      # Increase the angle in prep for the next round.
+      # increase angle 
       self.angle += self.speed
 
 #initiate class flea
@@ -140,19 +140,15 @@ all_sprites_list = pg.sprite.Group()
 for i in range(15):
   #this represents a pet
   pet = Pet()
-  # Set a random center location for the block to orbit
+  # sets a random center location for the pet to orbit
   pet.center_x = random.randrange(screenWidth - 97)
   pet.center_y = random.randrange(screenHeight - 100)
-  # Random radius from 10 to 200
+  # random radius from 10 to 200
   pet.radius = random.randrange(10, 200)
-  # Random start angle from 0 to 2pi
+  # random start angle from 0 to 2pi
   pet.angle = random.random() * 2 * math.pi
   # radians per frame
   pet.speed = 0.008
-
-# # Set a random location for the pet
-#   pet.rect.x = random.randrange(screenWidth - 97)
-#   pet.rect.y = random.randrange(screenHeight - 100)
 
   # Add the pet to the list of objects
   pet_list.add(pet)
@@ -175,7 +171,12 @@ for i in range(30):
 player = Player()
 all_sprites_list.add(player)
 
-##loop until user clicks close (will update to timer)
+# This is a font we use to draw text on the screen (size 36)
+font = pg.font.Font(None, 36)
+
+#will trigger game over when set to true
+game_over = False
+#loop until user clicks close (will update to timer)
 done = False
 
 # Used to manage how fast the screen updates
@@ -197,33 +198,49 @@ while not done:
     if event.type == pg.QUIT:
       done = True #same thing as sys.exit
     #   # sys.exit()
-    if seconds > 5:
-      break
-    print (seconds)
+    elif event.type == pg.MOUSEBUTTONDOWN:
+      game_over = True
+
   #set background image
   screen.blit(background_image, [0, 0])
-  
-  # Calls update() method on every sprite in the list
-  all_sprites_list.update()
+  if not game_over:
+    # Calls update() method on every sprite in the list
+    all_sprites_list.update()
 
-  # See if the player has collided with fleas. True removes the flea and returns a list of all colliding blocks
-  flea_hit_list = pg.sprite.spritecollide(player, flea_list, False)
+    # See if the player has collided with fleas. True removes the flea and returns a list of all colliding blocks
+    flea_hit_list = pg.sprite.spritecollide(player, flea_list, False)
 
-  # Check the list of collisions.
-  for flea in flea_hit_list:
-      score += 1
-      print(score)
-      # return score
-      #reset fleas to fall again
-      flea.reset_pos()
+    # Check the list of collisions.
+    for flea in flea_hit_list:
+        score += 1
+        print(score)
+        # return score
+        #reset fleas to fall again
+        flea.reset_pos()
 
-  for flea in flea_list:
-    if flea.rect.y > screenHeight + 10:
-      score -=2
-      print(score)
+    for flea in flea_list:
+      if flea.rect.y > screenHeight + 10:
+        score -=2
+        print(score)
 
   # Draw all the spites
   all_sprites_list.draw(screen)
+
+  if game_over:
+        # If game over is true, draw game over
+        text = font.render("Game Over", True, (255, 255, 255))
+        text_rect = text.get_rect()
+        text_x = screen.get_width() / 2 - text_rect.width / 2
+        text_y = screen.get_height() / 2 - text_rect.height / 2
+        screen.blit(text, [text_x, text_y])
+ 
+  else:
+      # If game isn't over, draw this stuff.
+      text = font.render("Click to end game", True, (255, 255, 255))
+      text_rect = text.get_rect()
+      text_x = screen.get_width() / 2 - text_rect.width / 2
+      text_y = screen.get_height() / 2 - text_rect.height / 2
+      screen.blit(text, [text_x, text_y])
 
   # Limit to 60 frames per second
   clock.tick(60)
