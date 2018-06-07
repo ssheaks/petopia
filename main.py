@@ -198,12 +198,13 @@ while not done:
     if event.type == pg.QUIT:
       done = True #same thing as sys.exit
     #   # sys.exit()
-    elif seconds > 5:
+    elif seconds > 10:
       game_over = True
 
   #set background image
   screen.blit(background_image, [0, 0])
   if not game_over:
+    pg.mouse.set_visible(False)
     # Calls update() method on every sprite in the list
     all_sprites_list.update()
 
@@ -228,6 +229,7 @@ while not done:
 
   if game_over:
         # If game over is true, draw game over
+        pg.mouse.set_visible(True)
         text = font.render("Game Over", True, (255, 255, 255))
         text_rect = text.get_rect()
         text_x = screen.get_width() / 2 - text_rect.width / 2
