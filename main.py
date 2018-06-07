@@ -24,15 +24,15 @@ class Pet(pg.sprite.Sprite):
 # This class represents the pet and derives from the "Sprite" class in Pygame.
 
   def __init__(self):
-    # Constructor. Pass in the color of the block,
-    # and its x and y position. 
+    # Constructor.
 
     # Call the parent class (Sprite) constructor
     super().__init__()
 
     # Create an image loaded from the disk.
-    self.image = pg.image.load('images/Sprite_Border_Collie.png')
-    # self.image.fill(color)
+    pet_path_list = ['images/Sprite_Border_Collie.png', 'images/Sprite_Tabby_Cat.png', 'images/Sprite_Rabbit.png', 'images/Sprite_Parrot.png']
+
+    self.image = pg.image.load(random.choice(pet_path_list))
 
     # Fetch the rectangle object that has the dimensions of the image, update the position of this object by setting the values of rect.x and rect.y
     self.rect = self.image.get_rect()
@@ -43,15 +43,13 @@ class Flea(pg.sprite.Sprite):
 # This class represents the pet and derives from the "Sprite" class in Pygame.
 
   def __init__(self):
-    # Constructor. Pass in the color of the block,
-    # and its x and y position. 
+    # Constructor. 
 
     # Call the parent class (Sprite) constructor
     super().__init__()
 
     # Create an image loaded from the disk.
     self.image = pg.image.load('images/Sprite_Flea.png')
-    # self.image.fill(color)
 
     # Fetch the rectangle object that has the dimensions of the image, update the position of this object by setting the values of rect.x and rect.y
     self.rect = self.image.get_rect()
@@ -59,7 +57,7 @@ class Flea(pg.sprite.Sprite):
   def reset_pos(self):
     # Reset position to the top of the screen, at a random x location. Called by update() or the main program loop if there is a collision.
         self.rect.y = random.randrange(-300, -20)
-        self.rect.x = random.randrange(0, screenWidth)
+        self.rect.x = random.randrange(0, screenWidth - 97)
  
   def update(self):
     #  Called each frame.
@@ -74,19 +72,16 @@ class Flea(pg.sprite.Sprite):
 #initiate class player
 class Player(pg.sprite.Sprite):
 
-# This class represents the pet and derives from the "Sprite" class in Pygame.
+# This class represents the player and derives from the "Sprite" class in Pygame.
 
-  #def __init__(self, image)
   def __init__(self):
-    # Constructor. Pass in the color of the block,
-    # and its x and y position. 
+    # Constructor. 
 
     # Call the parent class (Sprite) constructor
     super().__init__()
 
     # Create an image loaded from the disk.
     self.image = pg.image.load('images/Sprite_fly_swatter.png')
-    # self.image.fill(color)
 
     # Fetch the rectangle object that has the dimensions of the image, update the position of this object by setting the values of rect.x and rect.y
     self.rect = self.image.get_rect()
@@ -100,13 +95,12 @@ class Player(pg.sprite.Sprite):
     self.rect.x = pos[0]
     self.rect.y = pos[1]
 
-# image = py.image.load('images/Cartoon_Border_Collie.png')
 
 # def run_game():
 #Initialize and set up screen.
 pg.init()
-screenWidth = 1280
-screenHeight = 948
+screenWidth = 1100
+screenHeight = 815
 screen = pg.display.set_mode((screenWidth, screenHeight))
 pg.display.set_caption("Petopia: Pet Rescue!")
 
@@ -137,7 +131,7 @@ for i in range(30):
   #this represents a pet
   flea = Flea()
 
-# Set a random location for the block
+# Set a random location for the flea
   flea.rect.x = random.randrange(screenWidth - 97)
   flea.rect.y = random.randrange(screenHeight - 100)
 
