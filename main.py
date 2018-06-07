@@ -56,6 +56,21 @@ class Flea(pg.sprite.Sprite):
     # Fetch the rectangle object that has the dimensions of the image, update the position of this object by setting the values of rect.x and rect.y
     self.rect = self.image.get_rect()
 
+  def reset_pos(self):
+    # Reset position to the top of the screen, at a random x location. Called by update() or the main program loop if there is a collision.
+        self.rect.y = random.randrange(-300, -20)
+        self.rect.x = random.randrange(0, screenWidth)
+ 
+  def update(self):
+    #  Called each frame.
+
+    # Move block down one pixel
+    self.rect.y += 1
+
+    # If block is too far down, reset to top of screen.
+    if self.rect.y > screenHeight + 10:
+        self.reset_pos()
+
 #initiate class player
 class Player(pg.sprite.Sprite):
 
@@ -75,6 +90,15 @@ class Player(pg.sprite.Sprite):
 
     # Fetch the rectangle object that has the dimensions of the image, update the position of this object by setting the values of rect.x and rect.y
     self.rect = self.image.get_rect()
+  
+  def update(self):
+    # Get the current mouse position. This returns the position
+    # as a list of two numbers.
+    pos = pg.mouse.get_pos()
+
+    # Fetch the x and y out of the list, just like we'd fetch letters out of a string. Set the player object to the mouse location
+    self.rect.x = pos[0]
+    self.rect.y = pos[1]
 
 # image = py.image.load('images/Cartoon_Border_Collie.png')
 
@@ -100,22 +124,22 @@ for i in range(10):
   #this represents a pet
   pet = Pet()
 
-# Set a random location for the block
-  pet.rect.x = random.randrange(screenWidth)
-  pet.rect.y = random.randrange(screenHeight)
+# Set a random location for the pet
+  pet.rect.x = random.randrange(screenWidth - 97)
+  pet.rect.y = random.randrange(screenHeight - 100)
 
   # Add the pet to the list of objects
   pet_list.add(pet)
   all_sprites_list.add(pet)  
 
 # for loop for fleas
-for i in range(10):
+for i in range(30):
   #this represents a pet
   flea = Flea()
 
 # Set a random location for the block
-  flea.rect.x = random.randrange(screenWidth)
-  flea.rect.y = random.randrange(screenHeight)
+  flea.rect.x = random.randrange(screenWidth - 97)
+  flea.rect.y = random.randrange(screenHeight - 100)
 
   # Add the flea to the list of objects
   flea_list.add(flea)
@@ -150,31 +174,37 @@ while not done:
   #set background image
   screen.blit(background_image, [0, 0])
   
+  #Can move code below to player class
   # Get the current mouse position. Returns position as a list of two numbers.
-  pos = pg.mouse.get_pos()
+  # pos = pg.mouse.get_pos()
 
-  # Fetch the x and y out of the list like we fetch letters out of a string.
-  # Set the player object to the mouse location
-  player.rect.x = pos[0]
-  player.rect.y = pos[1]
+  # # Fetch the x and y out of the list like we fetch letters out of a string.
+  # # Set the player object to the mouse location
+  # player.rect.x = pos[0]
+  # player.rect.y = pos[1]
 
-  # See if the player block has collided with anything.
-  flea_hit_list = pg.sprite.spritecollide(player, flea_list, True)
+  # Calls update() method on every sprite in the list
+  all_sprites_list.update()
+
+  # See if the player block has collided with fleas. True removes the block and returns a list of all colliding blocks
+  flea_hit_list = pg.sprite.spritecollide(player, flea_list, False)
 
   # Check the list of collisions.
-  for pet in flea_hit_list:
+  for flea in flea_hit_list:
       score += 1
       print(score)
       # return score
+      #reset fleas to fall again
+      flea.reset_pos()
 
   # Draw all the spites
   all_sprites_list.draw(screen)
 
-  #Refresh screen.
-  pg.display.flip()
-
   # Limit to 60 frames per second
   clock.tick(60)
+
+  #Refresh screen.
+  pg.display.flip()
 
 # run_game()
 pg.quit()
