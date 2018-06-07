@@ -53,8 +53,7 @@ class Pet(pg.sprite.Sprite):
     self.speed = 0.05
  
   def update(self):
-      """ Update the ball's position. """
-      # Calculate a new x, y
+      #Update the pet's position, calculate a new x, y
       self.rect.x = self.radius * math.sin(self.angle) + self.center_x
       self.rect.y = self.radius * math.cos(self.angle) + self.center_y
 
