@@ -18,6 +18,7 @@ def get_image(path):
     _image_library[path] = image
   return image
 
+
 #initiate class pet
 class Pet(pg.sprite.Sprite):
 
@@ -66,8 +67,8 @@ class Flea(pg.sprite.Sprite):
     self.rect.y += 1
 
     # If block is too far down, reset to top of screen.
-    if self.rect.y > screenHeight + 10:
-        self.reset_pos()
+    if self.rect.y > screenHeight + 20:
+      self.reset_pos()
 
 #initiate class player
 class Player(pg.sprite.Sprite):
@@ -99,8 +100,8 @@ class Player(pg.sprite.Sprite):
 # def run_game():
 #Initialize and set up screen.
 pg.init()
-screenWidth = 1100
-screenHeight = 815
+screenWidth = 900
+screenHeight = 667
 screen = pg.display.set_mode((screenWidth, screenHeight))
 pg.display.set_caption("Petopia: Pet Rescue!")
 
@@ -114,7 +115,7 @@ flea_list = pg.sprite.Group()
 all_sprites_list = pg.sprite.Group()
 
 # for loop for pets
-for i in range(10):
+for i in range(15):
   #this represents a pet
   pet = Pet()
 
@@ -153,34 +154,28 @@ score = 0
 
 #load background image
 background_image = pg.image.load("picnic-area-149153_1280.png").convert()
-#get dog image for now without using the get_image function
-# husky = screen.blit(get_image('images/Cartoon_Border_Collie.png'), (20, 30))
-#get rect object from an image
-# husky_rect = husky.get_rect(topleft=(100, 300))
+
+start_ticks=pg.time.get_ticks() #starter tick
+print(start_ticks)
 
 #Start main loop.
 while not done: 
+  seconds = (pg.time.get_ticks() - start_ticks)/1000 #calculate how many seconds
   #start event loop.
   for event in pg.event.get():
     if event.type == pg.QUIT:
       done = True #same thing as sys.exit
-      # sys.exit()
+    #   # sys.exit()
+    if seconds > 5:
+      break
+    print (seconds)
   #set background image
   screen.blit(background_image, [0, 0])
   
-  #Can move code below to player class
-  # Get the current mouse position. Returns position as a list of two numbers.
-  # pos = pg.mouse.get_pos()
-
-  # # Fetch the x and y out of the list like we fetch letters out of a string.
-  # # Set the player object to the mouse location
-  # player.rect.x = pos[0]
-  # player.rect.y = pos[1]
-
   # Calls update() method on every sprite in the list
   all_sprites_list.update()
 
-  # See if the player block has collided with fleas. True removes the block and returns a list of all colliding blocks
+  # See if the player has collided with fleas. True removes the flea and returns a list of all colliding blocks
   flea_hit_list = pg.sprite.spritecollide(player, flea_list, False)
 
   # Check the list of collisions.
@@ -190,6 +185,11 @@ while not done:
       # return score
       #reset fleas to fall again
       flea.reset_pos()
+
+  for flea in flea_list:
+    if flea.rect.y > screenHeight + 10:
+      score -=2
+      print(score)
 
   # Draw all the spites
   all_sprites_list.draw(screen)
