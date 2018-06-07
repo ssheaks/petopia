@@ -1,5 +1,6 @@
 import sys
 import os
+import math
 # allows to randomly place sprites on screen
 import random
 import pygame as pg
@@ -37,6 +38,28 @@ class Pet(pg.sprite.Sprite):
 
     # Fetch the rectangle object that has the dimensions of the image, update the position of this object by setting the values of rect.x and rect.y
     self.rect = self.image.get_rect()
+
+    # The "center" the sprite will orbit
+    self.center_x = 0
+    self.center_y = 0
+
+    # Current angle in radians
+    self.angle = 0
+
+    # How far away from the center to orbit, in pixels
+    self.radius = 0
+
+    # How fast to orbit, in radians per frame
+    self.speed = 0.05
+ 
+  def update(self):
+      """ Update the ball's position. """
+      # Calculate a new x, y
+      self.rect.x = self.radius * math.sin(self.angle) + self.center_x
+      self.rect.y = self.radius * math.cos(self.angle) + self.center_y
+
+      # Increase the angle in prep for the next round.
+      self.angle += self.speed
 
 #initiate class flea
 class Flea(pg.sprite.Sprite):
@@ -118,10 +141,19 @@ all_sprites_list = pg.sprite.Group()
 for i in range(15):
   #this represents a pet
   pet = Pet()
+  # Set a random center location for the block to orbit
+  pet.center_x = random.randrange(screenWidth - 97)
+  pet.center_y = random.randrange(screenHeight - 100)
+  # Random radius from 10 to 200
+  pet.radius = random.randrange(10, 200)
+  # Random start angle from 0 to 2pi
+  pet.angle = random.random() * 2 * math.pi
+  # radians per frame
+  pet.speed = 0.008
 
-# Set a random location for the pet
-  pet.rect.x = random.randrange(screenWidth - 97)
-  pet.rect.y = random.randrange(screenHeight - 100)
+# # Set a random location for the pet
+#   pet.rect.x = random.randrange(screenWidth - 97)
+#   pet.rect.y = random.randrange(screenHeight - 100)
 
   # Add the pet to the list of objects
   pet_list.add(pet)
@@ -134,7 +166,7 @@ for i in range(30):
 
 # Set a random location for the flea
   flea.rect.x = random.randrange(screenWidth - 97)
-  flea.rect.y = random.randrange(screenHeight - 100)
+  flea.rect.y = random.randrange(screenHeight - 500)
 
   # Add the flea to the list of objects
   flea_list.add(flea)
