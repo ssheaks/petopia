@@ -198,7 +198,7 @@ while not done:
     if event.type == pg.QUIT:
       done = True #same thing as sys.exit
     #   # sys.exit()
-    elif event.type == pg.MOUSEBUTTONDOWN:
+    elif seconds > 5:
       game_over = True
 
   #set background image
