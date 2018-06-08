@@ -6,6 +6,7 @@ import random
 import pygame as pg
 from pygame.locals import *
 
+#store images in dictionary so don't have to continuously load
 _image_library = {}
 def get_image(path):
   global _image_library
@@ -14,15 +15,12 @@ def get_image(path):
   if image == None:
     canonicalized_path = path.replace('/', os.sep).replace('\\', os.sep)
     image = pg.image.load(canonicalized_path)
-    #this rescales images
-    image = pg.transform.scale(image, (97, 100))
     _image_library[path] = image
   return image
 
 
 #initiate class pet
 class Pet(pg.sprite.Sprite):
-
 # This class represents the pet and derives from the "Sprite" class in Pygame.
 
   def __init__(self):
@@ -34,7 +32,8 @@ class Pet(pg.sprite.Sprite):
     # Create an image loaded from the disk.
     pet_path_list = ['images/Sprite_Border_Collie.png', 'images/Sprite_Tabby_Cat.png', 'images/Sprite_Rabbit.png', 'images/Sprite_Parrot.png']
 
-    self.image = pg.image.load(random.choice(pet_path_list))
+    # self.image = pg.image.load(random.choice(pet_path_list))
+    self.image = get_image(random.choice(pet_path_list))
 
     # Fetch the rectangle object that has the dimensions of the image, update the position of this object by setting the values of rect.x and rect.y
     self.rect = self.image.get_rect()
@@ -64,7 +63,6 @@ class Pet(pg.sprite.Sprite):
 class Flea(pg.sprite.Sprite):
 
 # This class represents the pet and derives from the "Sprite" class in Pygame.
-
   def __init__(self):
     # Constructor. 
 
@@ -72,7 +70,7 @@ class Flea(pg.sprite.Sprite):
     super().__init__()
 
     # Create an image loaded from the disk.
-    self.image = pg.image.load('images/Sprite_Flea.png')
+    self.image = get_image('images/Sprite_Flea.png')
 
     # Fetch the rectangle object that has the dimensions of the image, update the position of this object by setting the values of rect.x and rect.y
     self.rect = self.image.get_rect()
@@ -84,7 +82,6 @@ class Flea(pg.sprite.Sprite):
  
   def update(self):
     #  Called each frame.
-
     # Move block down one pixel
     self.rect.y += 1
 
@@ -96,7 +93,6 @@ class Flea(pg.sprite.Sprite):
 class Player(pg.sprite.Sprite):
 
 # This class represents the player and derives from the "Sprite" class in Pygame.
-
   def __init__(self):
     # Constructor. 
 
@@ -190,12 +186,14 @@ score = 0
 #load background image
 background_image = pg.image.load("picnic-area-149153_1280.png").convert()
 
-start_ticks=pg.time.get_ticks() #starter tick
+#starter tick
+start_ticks=pg.time.get_ticks() 
 print(start_ticks)
 
 #Start main loop.
 while not done: 
-  seconds = (pg.time.get_ticks() - start_ticks)/1000 #calculate how many seconds
+  #calculate how many seconds
+  seconds = (pg.time.get_ticks() - start_ticks)/1000 
   #start event loop.
   for event in pg.event.get():
     if event.type == pg.QUIT:
@@ -225,13 +223,12 @@ while not done:
     for flea in flea_hit_list:
         score += 1
         print(score)
-        # return score
         #reset fleas to fall again
         flea.reset_pos()
 
     for flea in flea_list:
       if flea.rect.y > screenHeight + 10:
-        score -=2
+        score -=1
         print(score)
 
   # Draw all the spites
