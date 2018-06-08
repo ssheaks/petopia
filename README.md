@@ -11,11 +11,11 @@ The pets are playing on the playground (Petopia) but invaders have arrived! You 
   
 ## ToDo - an MVP checklist
 * [x] Images for pets, invaders and background
-* [ ] Implement moveable characters
+* [x] Implement moveable characters
 * [x] Implement background
-* [ ] Create timed game
+* [x] Create timed game
 * [ ] Increase speed as time progresses
-* [ ] Tell player when game ends and their stats for the game
-* [ ] Clickable characters (+pts on invaders, -pts on pets)
+* [x] Tell player when game ends and their score for the game
+
 
 
