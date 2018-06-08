@@ -178,6 +178,9 @@ font = pg.font.Font(None, 36)
 game_over = False
 #loop until user clicks close (will update to timer)
 done = False
+#will display instructions when set to True
+display_instructions = True
+instruction_page = 1
 
 # Used to manage how fast the screen updates
 clock = pg.time.Clock()
@@ -198,11 +201,18 @@ while not done:
     if event.type == pg.QUIT:
       done = True #same thing as sys.exit
     #   # sys.exit()
-    elif seconds > 10:
+    elif seconds > 40:
       game_over = True
 
   #set background image
   screen.blit(background_image, [0, 0])
+
+  #Render score to screen
+  msg = "Score: %d" % (score)
+  text = font.render(msg, True, (255, 255, 255))
+  text_rect = text.get_rect()
+  screen.blit(text, [10, 10])
+
   if not game_over:
     pg.mouse.set_visible(False)
     # Calls update() method on every sprite in the list
@@ -235,14 +245,6 @@ while not done:
         text_x = screen.get_width() / 2 - text_rect.width / 2
         text_y = screen.get_height() / 2 - text_rect.height / 2
         screen.blit(text, [text_x, text_y])
- 
-  else:
-      # If game isn't over, draw this stuff.
-      text = font.render("Click to end game", True, (255, 255, 255))
-      text_rect = text.get_rect()
-      text_x = screen.get_width() / 2 - text_rect.width / 2
-      text_y = screen.get_height() / 2 - text_rect.height / 2
-      screen.blit(text, [text_x, text_y])
 
   # Limit to 60 frames per second
   clock.tick(60)
