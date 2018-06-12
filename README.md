@@ -2,7 +2,7 @@
 An interactive pet rescue game!
 
 ## Description:
-The pets are playing on the playground (Petopia) but invaders have arrived! You have limited time to clear the playground for the pets. But watch out the invaders are harder to catch as time runs out! And try not to catch any pets or you will lose points.
+The pets are playing on the playground (Petopia) but flea invaders have arrived! You have limited time to clear the playground for the pets. But watch out the fleas are harder to catch as time runs out! And try not to let them get away or you will lose points.
 
 ## Technology:
 * Python 3.6
